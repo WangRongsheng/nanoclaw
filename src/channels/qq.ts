@@ -115,14 +115,14 @@ export class QQBotChannel implements Channel {
       this.handlePayload(payload);
     });
 
-    this.ws.on('close', (code) => {
+    this.ws.on('close', (code: number, _reason: Buffer) => {
       this.connected = false;
       this.clearHeartbeat();
       logger.warn({ code }, 'QQ Bot WebSocket closed, reconnecting in 5s');
       setTimeout(() => this.reconnect(), 5000);
     });
 
-    this.ws.on('error', (err) => {
+    this.ws.on('error', (err: Error) => {
       logger.error({ err }, 'QQ Bot WebSocket error');
     });
   }
